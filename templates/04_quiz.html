@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IQ Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .status-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .status-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .status-list li {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .question-number {
+            font-weight: bold;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status.attempted {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.not-attempted {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .prev {
+            background-color: #ccc;
+        }
+        .next {
+            background-color: #007bff;
+            color: white;
+        }
+        .submit {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Question {{ index + 1 }} of {{ total }}</h2>
+
+        <form method="post">
+            <div class="question">{{ question['question'] }}</div>
+            <div class="options">
+                {% for opt in question['options'] %}
+                    <label>
+                        <input type="radio" name="answer" value="{{ opt }}"
+                            {% if selected == opt %}checked{% endif %}>
+                        {{ opt }}
+                    </label>
+                {% endfor %}
+            </div>
+
+            <div class="nav-buttons">
+                {% if index > 0 %}
+                    <button type="submit" formaction="{{ url_for('prev_question') }}" class="prev">Previous</button>
+                {% endif %}
+                {% if index + 1 == total %}
+                    <button type="submit" formaction="{{ url_for('submit') }}" class="submit">Submit</button>
+                {% else %}
+                    <button type="submit" formaction="{{ url_for('next_question') }}" class="next">Next</button>
+                {% endif %}
+            </div>
+        </form>
+
+        <div class="status-box">
+            <h3>Question Status</h3>
+            <ul class="status-list">
+                {% for stat in status %}
+                    <li>
+                        <span class="question-number">Q{{ loop.index }}</span>
+                        <span class="status {{ stat | lower | replace(' ', '-') }}">{{ stat }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

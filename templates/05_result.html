@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Results</title>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #333;
+    }
+    p {
+      font-size: 1.1rem;
+      margin: 20px 0;
+    }
+    a {
+      margin: 0 10px;
+      background: #0077cc;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+    a:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your IQ Test Result</h2>
+    <p><strong>Score:</strong> {{ score }} / {{ total }}</p>
+    <p><strong>Estimated IQ Range:</strong> {{ iq_range }}</p>
+    <a href="{{ url_for('retry') }}">Try Again</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</body>
+</html>
